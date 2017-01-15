@@ -1,0 +1,6 @@
+[run]
+branch = True
+source = pyravia
+
+[report]
+ignore_errors = True
