@@ -30,23 +30,25 @@ _COMMAND_XML_TMPL = """<?xml version="1.0"?>
 
 class BraviaTV(object):
     def __init__(self, server, psk):
-        self.server = server
-        self.psk = psk
-        self.system_endpoint = '{server}/sony/system'.format(server=server)
-        self.ircc_endpoint = '{server}/sony/IRCC'.format(server=server)
-        self.id = 0
+        self._psk = psk
+        self._system_endpoint = '{server}/sony/system'.format(server=server)
+        self._ircc_endpoint = '{server}/sony/IRCC'.format(server=server)
+        self._id = 0
 
-        self.session = requests.Session()
+        self._session = requests.Session()
 
-        self.codes = {}
+        self._codes = {}
         for code in self._get_codes():
-            self.codes[code['name']] = code['value']
+            self._codes[code['name']] = code['value']
 
     def _get_codes(self):
         return self.send_json_command('getRemoteControllerInfo')[1]
 
+    def get_code_names(self):
+        return self._codes.keys()
+
     def _make_method_dict(self, meth, *args, **kwargs):
-        self.id += 1
+        self._id += 1
         if args:
             params = args
         else:
@@ -56,19 +58,19 @@ class BraviaTV(object):
         return {
             "method": meth,
             "params": params,
-            "id": self.id,
+            "id": self._id,
             "version": "1.0"}
 
     def send_command(self, command):
-        command_xml = _COMMAND_XML_TMPL.format(code=self.codes[command])
+        command_xml = _COMMAND_XML_TMPL.format(code=self._codes[command])
         headers = {
             'Content-Type': 'text/xml; charset=UTF-8',
             # The double quoting is needed - if the " is missing from the
             # string - it's invalid. (wat?)
             'SOAPACTION': '"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC"',
-            'X-Auth-PSK': self.psk}
-        return self.session.post(
-            self.ircc_endpoint,
+            'X-Auth-PSK': self._psk}
+        return self._session.post(
+            self._ircc_endpoint,
             data=command_xml,
             headers=headers)
 
@@ -79,12 +81,12 @@ class BraviaTV(object):
 
     def send_json_command(self, command, *args, **kwargs):
         command_dict = self._make_method_dict(command, *args, **kwargs)
-        result = self.session.post(
-            self.system_endpoint,
+        result = self._session.post(
+            self._system_endpoint,
             json=command_dict,
             headers={
                 'Content-Type': 'application/json',
-                'X-Auth-PSK': self.psk},
+                'X-Auth-PSK': self._psk},
         ).json()
         if 'result' in result.keys():
             result = result['result']
