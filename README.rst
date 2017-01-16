@@ -1,19 +1,17 @@
-===============================
+=======
 pyravia
-===============================
+=======
 
 Library to control Sony TVs and Stereos
 
-Please fill here a long description which must be at least 3 lines wrapped on
-80 cols, so that distribution package maintainers can use it in their packages.
-Note that this is a hard requirement.
+Sony makes excellent TVs and Stereos, but like old-school yutzes
+does not publish the API to control them. (something something official
+integration partners something something corruption something something)
 
-* Free software: Apache license
-* Documentation: http://docs.openstack.org/developer/pyravia
-* Source: http://git.openstack.org/cgit/emonty/pyravia
-* Bugs: http://bugs.launchpad.net/pyravia
+That's ok though - since all of the network interactions are done in clear
+text over the network, making them pretty easy to figure out.
 
-Features
---------
+Making it all even better, there is a different API for the TV than for the
+Stereo. YAY!
 
-* TODO
+* Free software: GPL License

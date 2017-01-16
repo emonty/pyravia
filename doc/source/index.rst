@@ -14,7 +14,7 @@ Contents:
    readme
    installation
    usage
-   contributing
+   releasenotes
 
 Indices and tables
 ==================
