@@ -14,6 +14,7 @@ Contents:
    readme
    installation
    usage
+   tvcodes
    releasenotes
 
 Indices and tables
