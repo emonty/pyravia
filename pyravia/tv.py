@@ -98,7 +98,13 @@ class BraviaTV(object):
 
     def ensure_on(self):
         if not self.is_on:
-            self.send_json_command('setPowerStatus', status=True)
+            self.turn_on()
+
+    def turn_on(self):
+        self.send_json_command('setPowerStatus', status=True)
+
+    def turn_off(self):
+        self.send_json_command('setPowerStatus', status=False)
 
     def get_versions(self):
         return self.send_json_command('getVersions')
