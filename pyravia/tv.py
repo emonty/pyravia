@@ -15,7 +15,7 @@
 
 import requests
 
-command_xml_tmpl = """<?xml version="1.0"?>
+_COMMAND_XML_TMPL = """<?xml version="1.0"?>
 <s:Envelope
     xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
     s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
@@ -60,7 +60,7 @@ class BraviaTV(object):
             "version": "1.0"}
 
     def send_command(self, command):
-        command_xml = command_xml_tmpl.format(code=self.codes[command])
+        command_xml = _COMMAND_XML_TMPL.format(code=self.codes[command])
         headers = {
             'Content-Type': 'text/xml; charset=UTF-8',
             # The double quoting is needed - if the " is missing from the
