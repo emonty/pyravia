@@ -72,6 +72,7 @@ class BraviaTV(object):
             data=command_xml,
             headers=headers)
 
+    @property
     def is_on(self):
         power_status = self.send_json_command('getPowerStatus')
         return power_status['status'] == 'active'
@@ -94,7 +95,7 @@ class BraviaTV(object):
         return result
 
     def ensure_on(self):
-        if not self.is_on():
+        if not self.is_on:
             self.send_json_command('setPowerStatus', status=True)
 
     def get_versions(self):
